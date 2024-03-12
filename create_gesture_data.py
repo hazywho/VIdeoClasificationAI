@@ -21,6 +21,16 @@ def cal_accum_avg(frame, accumulated_weight):
     cv2.accumulateWeighted(frame, background, accumulated_weight)
 
 
+
+
+
+
+
+
+
+
+
+
 def segment_hand(frame, threshold=25):
     global background
     
@@ -29,7 +39,7 @@ def segment_hand(frame, threshold=25):
     _ , thresholded = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)
 
     # Grab the external contours for the image
-    image, contours, hierarchy = cv2.findContours(thresholded.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresholded.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     if len(contours) == 0:
         return None
