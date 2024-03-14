@@ -3,16 +3,16 @@ import cv2
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
-word_dict = {0:'One', 1:'Two'}
+word_dict = {0:'One', 1:'Two', 2:'Three'}
 model = keras.models.load_model(r"best_model_dataflair3.h5")
 
 background = None
 accumulated_weight = 0.5
 
 ROI_top = 100
-ROI_bottom = 300
-ROI_right = 150
-ROI_left = 350
+ROI_bottom = 400
+ROI_right = 200
+ROI_left = 450
 
 
 
@@ -93,6 +93,7 @@ while True:
             
             pred = model.predict(thresholded)
             cv2.putText(frame_copy, word_dict[np.argmax(pred)], (170, 45), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+            print(np.argmax(pred))
             
     # Draw ROI on frame_copy
     cv2.rectangle(frame_copy, (ROI_left, ROI_top), (ROI_right, ROI_bottom), (255,128,0), 3)

@@ -4,9 +4,9 @@ import numpy as np
 background = None
 accumulated_weight = 0.5
 ROI_top = 100
-ROI_bottom = 300
-ROI_right = 150
-ROI_left = 350
+ROI_bottom = 400
+ROI_right = 200
+ROI_left = 450
 
 
 def cal_accum_avg(frame, accumulated_weight):
@@ -106,7 +106,7 @@ while True:
             cv2.imshow("Thresholded Hand Image", thresholded)
             if num_imgs_taken <= 300:
                 #cv2.imwrite(r"D:\\gesture\\train\\"+str(element)+"\\" + str(num_imgs_taken+300) + '.jpg', thresholded)
-                cv2.imwrite(r"C:\Users\zanyi\OneDrive\Git hub\VIdeoClasificationAI\Train\02"+ "/" + str(num_imgs_taken) + '.jpg', thresholded)
+                cv2.imwrite(r"C:\Users\zanyi\OneDrive\Git hub\VIdeoClasificationAI\Tes\03" + "/" + str(num_imgs_taken) + '.jpg', thresholded)
             else:
                 break
             num_imgs_taken +=1
