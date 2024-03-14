@@ -3,7 +3,7 @@ import cv2
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
-from DataFlair_trainCNN import word_dict
+word_dict = {0:'One', 1:'Two'}
 model = keras.models.load_model(r"best_model_dataflair3.h5")
 
 background = None
