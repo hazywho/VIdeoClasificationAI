@@ -3,8 +3,8 @@ import cv2
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
-
-model = keras.models.load_model(r"C:\Users\abhij\best_model_dataflair3.h5")
+from DataFlair_trainCNN import word_dict
+model = keras.models.load_model(r"best_model_dataflair3.h5")
 
 background = None
 accumulated_weight = 0.5
@@ -37,7 +37,7 @@ def segment_hand(frame, threshold=25):
     _ , thresholded = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)
     
     #Fetching contours in the frame (These contours can be of hand or any other object in foreground) ...
-    image, contours, hierarchy = cv2.findContours(thresholded.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(thresholded.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # If length of contours list = 0, means we didn't get any contours...
     if len(contours) == 0:

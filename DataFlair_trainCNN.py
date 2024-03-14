@@ -12,12 +12,12 @@ import numpy as np
 import cv2
 from keras.callbacks import ReduceLROnPlateau
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-import 
+import matplotlib.pyplot as plt
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-train_path = r'D:\gesture\train'
-test_path = r'D:\gesture\test'
+train_path = r"C:\Users\zanyi\OneDrive\Git hub\VIdeoClasificationAI\Train"
+test_path = r"C:\Users\zanyi\OneDrive\Git hub\VIdeoClasificationAI\Tes"
 
 train_batches = ImageDataGenerator(preprocessing_function=tf.keras.applications.vgg16.preprocess_input).flow_from_directory(directory=train_path, target_size=(64,64), class_mode='categorical', batch_size=10,shuffle=True)
 test_batches = ImageDataGenerator(preprocessing_function=tf.keras.applications.vgg16.preprocess_input).flow_from_directory(directory=test_path, target_size=(64,64), class_mode='categorical', batch_size=10, shuffle=True)
@@ -59,7 +59,7 @@ model.add(Dense(128,activation ="relu"))
 #model.add(Dropout(0.2))
 model.add(Dense(128,activation ="relu"))
 #model.add(Dropout(0.3))
-model.add(Dense(10,activation ="softmax"))
+model.add(Dense(2,activation ="softmax")) #output shape
 
 
 # In[23]:
@@ -102,8 +102,8 @@ scores #[loss, accuracy] on test data...
 model.metrics_names
 
 
-word_dict = {0:'One',1:'Ten',2:'Two',3:'Three',4:'Four',5:'Five',6:'Six',7:'Seven',8:'Eight',9:'Nine'}
-
+word_dict = {0:'One', 1:'Two'}
+#,1:'Ten',2:'Two',3:'Three',4:'Four',5:'Five',6:'Six',7:'Seven',8:'Eight',9:'Nine'
 predictions = model.predict(imgs, verbose=0)
 print("predictions on a small set of test data--")
 print("")
