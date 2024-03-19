@@ -80,7 +80,7 @@ early_stop = EarlyStopping(monitor='val_accuracy', min_delta=0.05, patience=3, v
 # early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=2, verbose=0, mode='auto')
 #callbacks=[reduce_lr, early_stop]
 
-history2 = model.fit(train_batches, epochs=11,  validation_data = test_batches)#, checkpoint])
+history2 = model.fit(train_batches, epochs=10,  validation_data = test_batches)#, checkpoint])
 imgs, labels = next(train_batches) # For getting next batch of imgs...
 
 imgs, labels = next(test_batches) # For getting next batch of imgs...
