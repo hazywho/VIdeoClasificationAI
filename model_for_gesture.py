@@ -3,7 +3,7 @@ import cv2
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
-word_dict = {0:'One', 1:'Two', 2:'Three'}
+word_dict = {0:'One', 1:'Two', 2:'Three', 3:'Four', 4:'I Love You'}
 model = keras.models.load_model(r"best_model_dataflair3.h5")
 
 background = None

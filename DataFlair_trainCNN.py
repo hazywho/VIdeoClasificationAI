@@ -52,6 +52,9 @@ model.add(MaxPool2D(pool_size=(2, 2), strides=2))
 model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu', padding = 'valid'))
 model.add(MaxPool2D(pool_size=(2, 2), strides=2))
 
+model.add(Conv2D(filters=512, kernel_size=(3, 3), activation='relu', padding = 'valid'))
+model.add(MaxPool2D(pool_size=(2, 2), strides=2))
+
 model.add(Flatten())
 
 model.add(Dense(64,activation ="relu"))
@@ -60,7 +63,7 @@ model.add(Dense(256,activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(128,activation ="relu"))
 model.add(Dropout(0.3))
-model.add(Dense(3,activation ="softmax")) #output shape
+model.add(Dense(5,activation ="softmax")) #output shape
 
 
 # In[23]:
@@ -103,7 +106,7 @@ scores #[loss, accuracy] on test data...
 model.metrics_names
 
 
-word_dict = {0:'One', 1:'Two', 2:'Three'}
+word_dict = {0:'One', 1:'Two', 2:'Three', 3:'Four', 4:'I Love You'}
 #,1:'Ten',2:'Two',3:'Three',4:'Four',5:'Five',6:'Six',7:'Seven',8:'Eight',9:'Nine'
 predictions = model.predict(imgs, verbose=0)
 print("predictions on a small set of test data--")
