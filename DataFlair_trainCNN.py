@@ -63,7 +63,7 @@ model.add(Dense(256,activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(128,activation ="relu"))
 model.add(Dropout(0.3))
-model.add(Dense(5,activation ="softmax")) #output shape
+model.add(Dense(4,activation ="softmax")) #output shape
 
 
 # In[23]:
@@ -71,7 +71,7 @@ model.add(Dense(5,activation ="softmax")) #output shape
 
 model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
 reduce_lr = ReduceLROnPlateau(monitor='val_accuracy', factor=0.01, patience=2, min_lr=0.0001)
-early_stop = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=2, verbose=0, mode='auto')
+early_stop = EarlyStopping(monitor='val_accuracy', min_delta=0.05, patience=3, verbose=0, mode='auto')
 
 
 
@@ -80,7 +80,7 @@ early_stop = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=2, verb
 # early_stop = EarlyStopping(monitor='val_loss', min_delta=0, patience=2, verbose=0, mode='auto')
 #callbacks=[reduce_lr, early_stop]
 
-history2 = model.fit(train_batches, epochs=10,  validation_data = test_batches)#, checkpoint])
+history2 = model.fit(train_batches, epochs=11,  validation_data = test_batches)#, checkpoint])
 imgs, labels = next(train_batches) # For getting next batch of imgs...
 
 imgs, labels = next(test_batches) # For getting next batch of imgs...
@@ -106,7 +106,7 @@ scores #[loss, accuracy] on test data...
 model.metrics_names
 
 
-word_dict = {0:'One', 1:'Two', 2:'Three', 3:'Four', 4:'I Love You'}
+word_dict = {0:'One', 1:'Three', 2:'Four', 3:'I Love You'}
 #,1:'Ten',2:'Two',3:'Three',4:'Four',5:'Five',6:'Six',7:'Seven',8:'Eight',9:'Nine'
 predictions = model.predict(imgs, verbose=0)
 print("predictions on a small set of test data--")
