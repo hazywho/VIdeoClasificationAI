@@ -5,6 +5,9 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 from gtts import gTTS
 from playsound import playsound
+import time
+import pygame
+from io import BytesIO
 word_dict = {0:'One', 1:'Three', 2:'Four', 3:'I Love You'}
 model = keras.models.load_model(r"best_model_dataflair3 copy.h5")
 
@@ -16,7 +19,11 @@ ROI_bottom = 400
 ROI_right = 200
 ROI_left = 450
 
-
+def speak(text, Language="en"):
+    name = "predText.mp3"
+    tss=gTTS(text,lang=Language)
+    tss.save(name)
+    return name
 
 def cal_accum_avg(frame, accumulated_weight):
 
@@ -54,6 +61,8 @@ last = 0
 count = 0
 cam = cv2.VideoCapture(0)
 num_frames =0
+pygame.init()
+pygame.mixer.init()
 while True:
     ret, frame = cam.read()
 
@@ -82,6 +91,8 @@ while True:
 
         # Checking if we are able to detect the hand...
         if hand is not None:
+            gray_frame = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+            gray_frame = cv2.GaussianBlur(gray_frame, (9, 9), 0)
             hand = segment_hand(gray_frame)
             thresholded, hand_segment = hand
 
@@ -104,9 +115,11 @@ while True:
                 count = 0
                 last = np.argmax(pred)
     if count > 60:
-        gTTS(text=word_dict[np.argmax(pred)], lang="en", slow=False).save("predText.mp3")
-        playsound("welcome.mp3")    
-        count = 0         
+        time.sleep(2)
+        sound = speak(word_dict[np.argmax(pred)])
+        time.sleep(2)
+        pygame.mixer.Sound(sound).play()
+
     # Draw ROI on frame_copy
     cv2.rectangle(frame_copy, (ROI_left, ROI_top), (ROI_right, ROI_bottom), (255,128,0), 3)
 
