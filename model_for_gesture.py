@@ -3,8 +3,10 @@ import cv2
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
+from gtts import gTTS
+from playsound import playsound
 word_dict = {0:'One', 1:'Three', 2:'Four', 3:'I Love You'}
-model = keras.models.load_model(r"best_model_dataflair3.h5")
+model = keras.models.load_model(r"best_model_dataflair3 copy.h5")
 
 background = None
 accumulated_weight = 0.5
@@ -48,7 +50,8 @@ def segment_hand(frame, threshold=25):
         
         # Returning the hand segment(max contour) and the thresholded image of hand...
         return (thresholded, hand_segment_max_cont)
-
+last = 0
+count = 0
 cam = cv2.VideoCapture(0)
 num_frames =0
 while True:
@@ -79,7 +82,7 @@ while True:
 
         # Checking if we are able to detect the hand...
         if hand is not None:
-            
+            hand = segment_hand(gray_frame)
             thresholded, hand_segment = hand
 
             # Drawing contours around hand segment
@@ -94,7 +97,16 @@ while True:
             pred = model.predict(thresholded)
             cv2.putText(frame_copy, word_dict[np.argmax(pred)], (170, 45), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
             print(np.argmax(pred))
-            
+            if np.argmax(pred) == last:
+                count += 1
+                last = np.argmax(pred)
+            else:
+                count = 0
+                last = np.argmax(pred)
+    if count > 60:
+        gTTS(text=word_dict[np.argmax(pred)], lang="en", slow=False).save("predText.mp3")
+        playsound("welcome.mp3")    
+        count = 0         
     # Draw ROI on frame_copy
     cv2.rectangle(frame_copy, (ROI_left, ROI_top), (ROI_right, ROI_bottom), (255,128,0), 3)
 
