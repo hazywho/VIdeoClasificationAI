@@ -35,8 +35,6 @@ def cal_accum_avg(frame, accumulated_weight):
 
     cv2.accumulateWeighted(frame, background, accumulated_weight)
 
-
-
 def segment_hand(frame, threshold=25):
     global background
     
@@ -136,6 +134,7 @@ while True:
 
     if k == 27:
         break
+
 
 # Release the camera and destroy all the windows
 cam.release()
